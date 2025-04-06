@@ -46,9 +46,26 @@ class BST:
         
         return node
     
-    def delete(self, value):
-        print(f"BST: Deleting {value}")
-        # Do implementacji
+# ===== USUWANIE DRZEWA =====
+    def deleteTreePostOrder(self, node, deletedValues):
+        if node is None:
+            return
+        
+        self.deleteTreePostOrder(node.left, deletedValues) # lewe poddrzewo
+        self.deleteTreePostOrder(node.right, deletedValues) # prawe poddrzewo
+
+        deletedValues.append(str(node.value))
+        node.left = None
+        node.right = None
+        node.value = None
+
+    def delete(self):
+        deletedValues = []
+        self.deleteTreePostOrder(self.root, deletedValues)
+        self.root = None  # Po usunięciu drzewa, root = None
+        print(f"Deleting: {" ".join(deletedValues)}")
+        print("BST tree succesfully removed")
+
 
 
 # ======= WYPISANIE =======
@@ -203,9 +220,25 @@ class AVL(BST):
 
         return y
     
-    def delete(self, value):
-        print(f"AVL: Deleting {value} with balancing")
-        # Do implementacji
+# ===== USUWANIE DRZEWA =====
+    def deleteTreePostOrder(self, node, deletedValues):
+        if node is None:
+            return
+
+        self.deleteTreePostOrder(node.left, deletedValues)
+        self.deleteTreePostOrder(node.right, deletedValues)
+
+        deletedValues.append(str(node.value)) 
+        node.left = None
+        node.right = None
+        node.value = None
+
+    def delete(self):
+        deletedValues = []
+        self.deleteTreePostOrder(self.root, deletedValues)
+        self.root = None  # Po usunięciu drzewa, root = None
+        print(f"Deleting: {' '.join(deletedValues)}")
+        print("AVL tree succesfully removed")
     
 # ======= WYPISANIE =======
     def printOrder(self):

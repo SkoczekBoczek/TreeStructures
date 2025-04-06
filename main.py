@@ -114,7 +114,7 @@ def main():
                 elif line == "remove":
                     print("Removing", treeType)
                 elif line == "delete":
-                    print("Someday tree will be deleted XXX")
+                    tree.delete() 
                 elif line == "findminmax":
                     tree.findMinMax()
                 elif line == "export":
