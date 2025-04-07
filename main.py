@@ -51,10 +51,14 @@ def readInputData():
     if len(sys.argv) > 3:
         return cleanInput(sys.argv[3:])
 
-def getInteractiveInput():
+def getInteractiveInput(data):
     while True:
         try:
-            userInput = input("insert> ").strip()
+            if data == "remove":
+                userInput = input("delete> ").strip()
+            else:
+                userInput = input("insert> ").strip()
+
             if userInput:
                 return cleanInput(userInput)
         except EOFError:
@@ -90,7 +94,7 @@ def main():
                 tree.insert(value)
 
     elif len(sys.argv) == 3:
-        data = getInteractiveInput()
+        data = getInteractiveInput(None)
         showData(data)
         if treeType == "AVL":
             tree.build_from_sorted_array(data)
@@ -112,7 +116,9 @@ def main():
                     tree.printOrder()
                     print()
                 elif line == "remove":
-                    print("Removing", treeType)
+                    elements = getInteractiveInput(line)
+                    for value in elements: # Obsługa usuwania więcej niż 1 elementu
+                        tree.deleteValue(value)  
                 elif line == "delete":
                     tree.delete() 
                 elif line == "findminmax":
@@ -130,7 +136,7 @@ def main():
                 else:
                     print(f"Unknown command: {line}")
             
-            except EOFError:
+            except EOFError: # End Of File Error
                 print("\nExiting...")
                 break
     else:

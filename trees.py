@@ -46,6 +46,45 @@ class BST:
         
         return node
     
+# ===== USUWANIE ELEMENTÓW =====
+    def deleteValue(self, value):
+        print(f"BST: Deleting {value}")
+        self.root = self.deleteNode(self.root, value)
+
+    def deleteNode(self, node, value):
+        if node is None:
+            print(f"{value} not found in BST.")
+            return node
+
+        if value < node.value:
+            node.left = self.deleteNode(node.left, value)
+        elif value > node.value:
+            node.right = self.deleteNode(node.right, value)
+        else:
+            if node.left is None:
+                temp = node.right
+                print(f"Removing node {node.value}, replaced by right child")
+                return temp
+            elif node.right is None:
+                temp = node.left
+                print(f"Removing node {node.value}, replaced by left child")
+                return temp
+
+            temp = self.minValueNode(node.right)
+            print(f"Removing node {node.value}, replaced by inorder successor {temp.value}")
+            node.value = temp.value
+            node.right = self.deleteNode(node.right, temp.value)
+
+        return node
+    
+# Szukanie następcy in-order (successor)
+    def minValueNode(self, node): 
+        current = node
+        while current.left is not None:
+            current = current.left
+        return current
+
+        
 # ===== USUWANIE DRZEWA =====
     def deleteTreePostOrder(self, node, deletedValues):
         if node is None:
@@ -220,6 +259,62 @@ class AVL(BST):
 
         return y
     
+# ===== USUWANIE ELEMENTÓW =====
+    def deleteValue(self, value):
+        print(f"AVL: Deleting {value} with balancing")
+        self.root = self.deleteNode(self.root, value)
+
+    def deleteNode(self, node, value):
+        if not node:
+            print(f"{value} not found in AVL.")
+            return node
+
+        if value < node.value:
+            node.left = self.deleteNode(node.left, value)
+        elif value > node.value:
+            node.right = self.deleteNode(node.right, value)
+        else:
+            if node.left is None:
+                temp = node.right
+                print(f"Removing node {node.value}, replaced by right child")
+                return temp
+            elif node.right is None:
+                temp = node.left
+                print(f"Removing node {node.value}, replaced by left child")
+                return temp
+
+            temp = self.minValueNode(node.right)
+            print(f"Removing node {node.value}, replaced by inorder successor {temp.value}")
+            node.value = temp.value
+            node.right = self.deleteNode(node.right, temp.value)
+
+        node.height = 1 + max(self._get_height(node.left), self._get_height(node.right))
+
+        balance = self._get_balance(node)
+
+        if balance > 1 and self._get_balance(node.left) >= 0:
+            return self._right_rotate(node)
+
+        if balance > 1 and self._get_balance(node.left) < 0:
+            node.left = self._left_rotate(node.left)
+            return self._right_rotate(node)
+
+        if balance < -1 and self._get_balance(node.right) <= 0:
+            return self._left_rotate(node)
+
+        if balance < -1 and self._get_balance(node.right) > 0:
+            node.right = self._right_rotate(node.right)
+            return self._left_rotate(node)
+
+        return node
+    
+#Szukanie następcy in-order (successor)
+    def minValueNode(self, node):
+        current = node
+        while current.left is not None:
+            current = current.left
+        return current
+
 # ===== USUWANIE DRZEWA =====
     def deleteTreePostOrder(self, node, deletedValues):
         if node is None:
