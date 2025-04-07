@@ -31,20 +31,6 @@ class BST:
             else:
                 self._insert_helper(node.right, value)
     
-    def build_from_sorted_array(self, arr):
-        self.root = self._build_bst(arr, 0, len(arr)-1)
-    
-    def _build_bst(self, arr, start, end):
-        if start > end:
-            return None
-        
-        mid = (start + end) // 2
-        node = TreeNode(arr[mid])
-        
-        node.left = self._build_bst(arr, start, mid-1)
-        node.right = self._build_bst(arr, mid+1, end)
-        
-        return node
     
 # ===== USUWANIE ELEMENTÓW =====
     def deleteValue(self, value):
@@ -198,67 +184,12 @@ class AVL(BST):
             return 0
         return node.height
     
-    def insert(self, value):
-        print(f"AVL: Inserting {value} with balancing")
-        self.root = self._insert_helper(self.root, value)
-
-    def _insert_helper(self, node, value):
-        if not node:
-            return TreeNode(value)
-        elif value < node.value:
-            node.left = self._insert_helper(node.left, value)
-        else:
-            node.right = self._insert_helper(node.right, value)
-
-        node.height = 1 + max(self._get_height(node.left), self._get_height(node.right))
-
-        balance = self._get_balance(node)
-
-        if balance > 1 and value < node.left.value:
-            return self._right_rotate(node)
-
-        if balance < -1 and value > node.right.value:
-            return self._left_rotate(node)
-
-        if balance > 1 and value > node.left.value:
-            node.left = self._left_rotate(node.left)
-            return self._right_rotate(node)
-
-        if balance < -1 and value < node.right.value:
-            node.right = self._right_rotate(node.right)
-            return self._left_rotate(node)
-
-        return node
-    
     def _get_balance(self, node):
         if not node:
             return 0
         return self._get_height(node.left) - self._get_height(node.right)
-
-    def _left_rotate(self, z):
-        y = z.right
-        T2 = y.left
-
-        y.left = z
-        z.right = T2
-
-        z.height = 1 + max(self._get_height(z.left), self._get_height(z.right))
-        y.height = 1 + max(self._get_height(y.left), self._get_height(y.right))
-
-        return y
-
-    def _right_rotate(self, z):
-        y = z.left
-        T3 = y.right
-
-        y.right = z
-        z.left = T3
-
-        z.height = 1 + max(self._get_height(z.left), self._get_height(z.right))
-        y.height = 1 + max(self._get_height(y.left), self._get_height(y.right))
-
-        return y
     
+
 # ===== USUWANIE ELEMENTÓW =====
     def deleteValue(self, value):
         print(f"AVL: Deleting {value} with balancing")
