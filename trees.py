@@ -154,7 +154,7 @@ class BST:
         print(f"Min {self.findMin(self.root)}")
 
 
-# ===== RÓWNOWAŻENIE ===== ZMIENNNNNNNNEEEEE
+# ===== RÓWNOWAŻENIE =====
     def rebalanceDsw(self):
         print("BST: Rebalancing using DSW algorithm")
         currentTail = tempRoot = TreeNode(None)
@@ -184,7 +184,7 @@ class BST:
             m = m // 2
             self.compress(tempRoot, m)
     
-        self.root = tempRoot.right  # Ustaw nowy korzeń
+        self.root = tempRoot.right
 
     def countNodes(self):
         count = 0
@@ -214,7 +214,7 @@ class BST:
             if grandchild:
                 grandchild.left = child
             
-            currentParent = currentParent.right  # Przejdź do następnego węzła
+            currentParent = currentParent.right
 
 # ===== RYSOWANIE DRZEWA W TICKZPICTURE =====
     def exportToTikz(self, filename='tree.tex'):

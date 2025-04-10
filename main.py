@@ -14,17 +14,6 @@ def printMenu():
     print("{}        {}".format("Exit", "Exits the program (or ctrl+D)"))
     print("================================")
 
-# def cleanInput(raw_data):
-#     data = []
-#     for item in raw_data:
-#         numbers = []
-#         for num in item.split(","):
-#             cleanedNum = num.strip()
-#             if cleanedNum:
-#                 numbers.append(cleanedNum)
-#         data.extend(numbers)
-
-#     return data
 
 def cleanInput(raw_data):
     data = []
@@ -69,7 +58,7 @@ def main():
     if len(sys.argv) < 3 or sys.argv[1] != "--tree" or sys.argv[2] not in ["AVL", "BST"]:
         print("Usage: python3 main.py --tree [AVL|BST] [numbers...]")
         print("Or:    python3 main.py --tree [AVL|BST] <<< 'numbers'")
-        print("Or:    python3 main.py --tree [AVL|BST] < file.txt")
+        # print("Or:    python3 main.py --tree [AVL|BST] < file.txt")
         print("Or:    python3 main.py --tree [AVL|BST] num1, num2, num3")
         sys.exit(1)
 
