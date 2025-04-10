@@ -179,7 +179,6 @@ class BST:
     
         self.compress(tempRoot, n - m)
     
-        # Kolejne kompresje: stopniowo balansuj drzewo
         while m > 1:
             m = m // 2
             self.compress(tempRoot, m)

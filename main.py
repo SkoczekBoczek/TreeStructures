@@ -14,7 +14,6 @@ def printMenu():
     print("{}        {}".format("Exit", "Exits the program (or ctrl+D)"))
     print("================================")
 
-
 def cleanInput(raw_data):
     data = []
     if isinstance(raw_data, list):
