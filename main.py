@@ -5,7 +5,7 @@ from trees import BST, AVL
 def printMenu():
     print("================================")
     print("{}        {}".format("Help", "Show this message"))
-    print("{}       {}".format("Print", "Print the tree using In-order, Pre-order, Post-order"))
+    print("{}       {}".format("Print", "Print the tree traversals: In-order, Pre-order, Post-order"))
     print("{}      {}".format("Remove", "Remove elements from the tree"))
     print("{}      {}".format("Delete", "Delete whole tree"))
     print("{}  {}".format("FindMinMax", "Find minimum and maximum"))
@@ -103,7 +103,7 @@ def main():
                 tree.insert(value)
 
 
-    if sys.stdin.isatty():
+    if sys.stdin.isatty(): # is at terminal
         print("\nInteractive mode (type 'help' for commands)")
         while True:
             try:
@@ -124,12 +124,20 @@ def main():
                 elif line == "findminmax":
                     tree.findMinMax()
                 elif line == "export":
-                    print("Export to tikzpicture XXX")
+                    print("\nEnter filename with txt extension (Pattern: tree.txt)")
+                    while True:
+                        filename = input("filename> ").strip()
+                        if filename == "exit":
+                            break
+                        elif "." in filename and filename.split(".")[-1] == "txt":
+                            tree.exportToTikz(filename)
+                            break
+                        print('Enter a valid filename (name.txt) or type "exit" to leave')
                 elif line == "rebalance":
                     if treeType == "AVL":
-                        print("AVL tree is always balanced XXX")
+                        print("AVL tree is always balanced")
                     else:
-                        print("BST someday will be rebalanced XXX ")
+                        tree.rebalanceDsw()                   
                 elif line == "exit":
                     print("Exiting...")
                     break
